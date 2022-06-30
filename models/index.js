@@ -43,4 +43,4 @@ Item.hasMany(History, {
 });
 
 // Exports the module to be used in other files
-module.exports = { User, Item, Comment, History };
+module.exports = { User, Item, Category, History };
