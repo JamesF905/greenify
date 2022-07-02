@@ -3,29 +3,31 @@ const router = require('express').Router();
 const { User, Item, History } = require('../../models');
 const sequelize = require('../../config/connection');
 const withAuth = require('../../utils/auth');
+const format_date = require('../../utils/helpers');
 
-// Gets all Item table data
+// Gets all History table data
 router.get('/', (req, res) => {
-    Item.findAll({
-        // From the Item table, it will find all attributes including the item ID, text, title, and timestamp
+    History.findAll({
+        // From the History table, it will find all attributes including the history ID, history_name, item_id, user_id, and timestamp
         attributes: 
         [
             'id',
-            'item_text',
-            'title',
+            'history_name',
+            'item_id',
+            'user_id',
             'created_at',
         ],
-        // Order the item from most recent in descending order
+        // Order the posts from most recent in descending order
         order: [[ 'created_at', 'DESC']],
-        // From the User table, include the username from the User associated with the item. Then, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+        // From the User table, include the username from the User associated with the history. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties)
         include: [
             {
                 model: User,
                 attributes: ['username']
             },
             {
-                model: History,
-                attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
+                model: Item,
+                attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
                 include: 
                 {
                     model: User,
@@ -42,31 +44,32 @@ router.get('/', (req, res) => {
     });
 });
 
-//Get a single item by it's id
+//Get a single history edit by it's id
 router.get('/:id', (req, res) => {
-    Item.findOne({
+    History.findOne({
       where: 
       {
         // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
         id: req.params.id
       },
-      // From the Item table, it will find all attributes including the item ID, text, title, and timestamp
+      // From the History table, it will find all attributes including the ID, history_name, item_id, user_id, and timestamp
       attributes: 
       [
         'id',
-        'item_text',
-        'title',
+        'history_name',
+        'item_id',
+        'user_id',
         'created_at',
       ],
-      // From the User table, include the username from the User associated with the item. Then, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+      // From the User table, include the username from the User associated with the history edit. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties)
       include: [
         {
           model: User,
           attributes: ['username']
         },
         {
-            model: History,
-            attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
+            model: Item,
+            attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
             include: 
             {
                 model: User,
@@ -76,9 +79,9 @@ router.get('/:id', (req, res) => {
       ]
     })
     .then(dbPostData => {
-        // If there is no matching id for the item requested, log an error
+        // If there is no matching id for the history requested, log an error
         if (!dbPostData) {
-          res.status(404).json({ message: 'No item with this id exists' });
+          res.status(404).json({ message: 'No edit history with this id exists' });
           return;
         }
         res.json(dbPostData); // Returning the result data as JSON Object
@@ -90,12 +93,12 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// Creates a new item
+// Creates a new edit history
 router.post('/', withAuth, (req, res) => {
-    // Creates a new item in the Item table with the properties of title, item_text, and user_id
-    Item.create({
-        title: req.body.title,
-        post_text: req.body.item_text,
+    // Creates a new edit history in the History table with the properties of history_name, item_id, and user_id
+    History.create({
+        history_name: req.session.user_id + " edited this on " + format_date, // Should read like "Ben edited this on 22/04/2022"
+        item_id: req.body.item_id,
         user_id: req.session.user_id
     })
     .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
@@ -106,35 +109,9 @@ router.post('/', withAuth, (req, res) => {
     });
 });
 
-// Update a item's title or text for item that matches the requested id
-router.put('/:id', withAuth, (req, res) => {
-    Item.update(req.body,
-        {
-            // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
-            where: 
-            {
-                id: req.params.id
-            }
-        }
-    )
-    .then(dbPostData => {
-        // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
-            res.status(404).json({ message: 'No item with this id exists' });
-            return;
-        }
-        res.json(dbPostData); // Returning the result data as JSON Object
-    })
-    .catch(err => {
-        // if there is an error, it will log an error
-        console.log(err);
-        res.status(500).json(err)
-    });
-});
-
-// Deletes an item for an item that matches the requested id
+// Deletes edit history for an edit history that matches the requested id
 router.delete('/:id', withAuth, (req, res) => {
-    Item.destroy({
+    History.destroy({
       // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
       where: 
       {
@@ -142,9 +119,9 @@ router.delete('/:id', withAuth, (req, res) => {
       }
     })
       .then(dbPostData => {
-        // If there is no matching id for the item requested, log an error
+        // If there is no matching id for the post requested, log an error
         if (!dbPostData) {
-          res.status(404).json({ message: 'No item with this id exists' });
+          res.status(404).json({ message: 'No edit history with this id exists' });
           return;
         }
         res.json(dbPostData); // Returning the result data as JSON Object
