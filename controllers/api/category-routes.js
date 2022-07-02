@@ -1,27 +1,34 @@
 // Setting up file requirements
 const router = require('express').Router();
-const { User, Item, History } = require('../../models');
+const { User, Item, History, Category } = require('../../models');
 const sequelize = require('../../config/connection');
 const withAuth = require('../../utils/auth');
 
 // Gets all Item table data
 router.get('/', (req, res) => {
-    Item.findAll({
-        // From the Item table, it will find all attributes including the item ID, text, title, and timestamp
+    Category.findAll({
+        // From the Category table, it will find all attributes including the ID and category name
         attributes: 
         [
             'id',
-            'item_text',
-            'title',
-            'created_at',
+            'category_name',
         ],
-        // Order the item from most recent in descending order
-        order: [[ 'created_at', 'DESC']],
-        // From the User table, include the username from the User associated with the item. Then, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+        // Order the category by id in descending order
+        order: [[ 'id', 'DESC']],
+        // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
         include: [
             {
                 model: User,
                 attributes: ['username']
+            },
+            {
+                model: Item,
+                attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
+                include: 
+                {
+                    model: User,
+                    attributes: ['username']
+                }
             },
             {
                 model: History,
@@ -42,43 +49,50 @@ router.get('/', (req, res) => {
     });
 });
 
-//Get a single item by it's id
+//Get a single category by it's id
 router.get('/:id', (req, res) => {
-    Item.findOne({
-      where: 
-      {
-        // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
-        id: req.params.id
-      },
-      // From the Item table, it will find all attributes including the item ID, text, title, and timestamp
-      attributes: 
-      [
-        'id',
-        'item_text',
-        'title',
-        'created_at',
-      ],
-      // From the User table, include the username from the User associated with the item. Then, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
-      include: [
+    Category.findOne({
+        where: 
         {
-          model: User,
-          attributes: ['username']
+            // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
+            id: req.params.id
         },
-        {
-            model: History,
-            attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
-            include: 
+        // From the Category table, it will find all attributes including the ID, and category_name
+        attributes: 
+        [
+            'id',
+            'category_name',
+        ],
+        // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+        include: [
             {
                 model: User,
                 attributes: ['username']
+            },
+            {
+                model: Item,
+                attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
+                include: 
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            },
+            {
+                model: History,
+                attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
+                include: 
+                {
+                    model: User,
+                    attributes: ['username']
+                }
             }
-        }
-      ]
+        ]
     })
     .then(dbPostData => {
-        // If there is no matching id for the item requested, log an error
+        // If there is no matching id for the category requested, log an error
         if (!dbPostData) {
-          res.status(404).json({ message: 'No item with this id exists' });
+          res.status(404).json({ message: 'No category with this id exists' });
           return;
         }
         res.json(dbPostData); // Returning the result data as JSON Object
@@ -90,13 +104,11 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// Creates a new item
+// Creates a new category
 router.post('/', withAuth, (req, res) => {
-    // Creates a new item in the Item table with the properties of title, item_text, and user_id
-    Item.create({
-        title: req.body.title,
-        post_text: req.body.item_text,
-        user_id: req.session.user_id
+    // Creates a new categoru in the Category table with the properties of category_name
+    Category.create({
+        category_name: req.body.category_name,
     })
     .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
     .catch(err => {
@@ -106,9 +118,9 @@ router.post('/', withAuth, (req, res) => {
     });
 });
 
-// Update an item's title or text for item that matches the requested id
+// Update a category's category_name for category that matches the requested id
 router.put('/:id', withAuth, (req, res) => {
-    Item.update(req.body,
+    Category.update(req.body,
         {
             // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
             where: 
@@ -120,7 +132,7 @@ router.put('/:id', withAuth, (req, res) => {
     .then(dbPostData => {
         // If there is no matching id for the item requested, log an error
         if (!dbPostData) {
-            res.status(404).json({ message: 'No item with this id exists' });
+            res.status(404).json({ message: 'No category with this id exists' });
             return;
         }
         res.json(dbPostData); // Returning the result data as JSON Object
@@ -132,9 +144,9 @@ router.put('/:id', withAuth, (req, res) => {
     });
 });
 
-// Deletes an item for an item that matches the requested id
+// Deletes a category for a category that matches the requested id
 router.delete('/:id', withAuth, (req, res) => {
-    Item.destroy({
+    Category.destroy({
       // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
       where: 
       {
@@ -144,7 +156,7 @@ router.delete('/:id', withAuth, (req, res) => {
       .then(dbPostData => {
         // If there is no matching id for the item requested, log an error
         if (!dbPostData) {
-          res.status(404).json({ message: 'No item with this id exists' });
+          res.status(404).json({ message: 'No category with this id exists' });
           return;
         }
         res.json(dbPostData); // Returning the result data as JSON Object
