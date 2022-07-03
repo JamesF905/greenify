@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
             }
         ]
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbCategoryData => res.json(dbCategoryData)) // Returning the result data as JSON Object
     // if there is an error, it will log an error
     .catch(err => {
         console.log(err);
@@ -89,13 +89,13 @@ router.get('/:id', (req, res) => {
             }
         ]
     })
-    .then(dbPostData => {
+    .then(dbCategoryData => {
         // If there is no matching id for the category requested, log an error
-        if (!dbPostData) {
+        if (!dbCategoryData) {
           res.status(404).json({ message: 'No category with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbCategoryData); // Returning the result data as JSON Object
     })
       .catch(err => {
         // if there is an error, it will log an error
@@ -110,7 +110,7 @@ router.post('/', withAuth, (req, res) => {
     Category.create({
         category_name: req.body.category_name,
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbCategoryData => res.json(dbCategoryData)) // Returning the result data as JSON Object
     .catch(err => {
         // if there is an error, it will log an error
         console.log(err);
@@ -129,13 +129,13 @@ router.put('/:id', withAuth, (req, res) => {
             }
         }
     )
-    .then(dbPostData => {
+    .then(dbCategoryData => {
         // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
+        if (!dbCategoryData) {
             res.status(404).json({ message: 'No category with this id exists' });
             return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbCategoryData); // Returning the result data as JSON Object
     })
     .catch(err => {
         // if there is an error, it will log an error
@@ -153,13 +153,13 @@ router.delete('/:id', withAuth, (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbPostData => {
-        // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
+      .then(dbCategoryData => {
+        // If there is no matching id for the category requested, log an error
+        if (!dbCategoryData) {
           res.status(404).json({ message: 'No category with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbCategoryData); // Returning the result data as JSON Object
       })
       .catch(err => {
         // if there is an error, it will log an error

@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
             }
         ]
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbHistoryData => res.json(dbHistoryData)) // Returning the result data as JSON Object
     // if there is an error, it will log an error
     .catch(err => {
         console.log(err);
@@ -78,13 +78,13 @@ router.get('/:id', (req, res) => {
         }
       ]
     })
-    .then(dbPostData => {
+    .then(dbHistoryData => {
         // If there is no matching id for the history requested, log an error
-        if (!dbPostData) {
+        if (!dbHistoryData) {
           res.status(404).json({ message: 'No edit history with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbHistoryData); // Returning the result data as JSON Object
     })
       .catch(err => {
         // if there is an error, it will log an error
@@ -101,7 +101,7 @@ router.post('/', withAuth, (req, res) => {
         item_id: req.body.item_id,
         user_id: req.session.user_id
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbHistoryData => res.json(dbHistoryData)) // Returning the result data as JSON Object
     .catch(err => {
         // if there is an error, it will log an error
         console.log(err);
@@ -118,13 +118,13 @@ router.delete('/:id', withAuth, (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbPostData => {
+      .then(dbHistoryData => {
         // If there is no matching id for the post requested, log an error
-        if (!dbPostData) {
+        if (!dbHistoryData) {
           res.status(404).json({ message: 'No edit history with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbHistoryData); // Returning the result data as JSON Object
       })
       .catch(err => {
         // if there is an error, it will log an error

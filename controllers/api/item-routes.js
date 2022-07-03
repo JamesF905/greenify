@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
             }
         ]
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbItemData => res.json(dbItemData)) // Returning the result data as JSON Object
     // if there is an error, it will log an error
     .catch(err => {
         console.log(err);
@@ -75,13 +75,13 @@ router.get('/:id', (req, res) => {
         }
       ]
     })
-    .then(dbPostData => {
+    .then(dbItemData => {
         // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
+        if (!dbItemData) {
           res.status(404).json({ message: 'No item with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbItemData); // Returning the result data as JSON Object
     })
       .catch(err => {
         // if there is an error, it will log an error
@@ -98,7 +98,7 @@ router.post('/', withAuth, (req, res) => {
         post_text: req.body.item_text,
         user_id: req.session.user_id
     })
-    .then(dbPostData => res.json(dbPostData)) // Returning the result data as JSON Object
+    .then(dbItemData => res.json(dbItemData)) // Returning the result data as JSON Object
     .catch(err => {
         // if there is an error, it will log an error
         console.log(err);
@@ -117,13 +117,13 @@ router.put('/:id', withAuth, (req, res) => {
             }
         }
     )
-    .then(dbPostData => {
+    .then(dbItemData => {
         // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
+        if (!dbItemData) {
             res.status(404).json({ message: 'No item with this id exists' });
             return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbItemData); // Returning the result data as JSON Object
     })
     .catch(err => {
         // if there is an error, it will log an error
@@ -141,13 +141,13 @@ router.delete('/:id', withAuth, (req, res) => {
         id: req.params.id
       }
     })
-      .then(dbPostData => {
+      .then(dbItemData => {
         // If there is no matching id for the item requested, log an error
-        if (!dbPostData) {
+        if (!dbItemData) {
           res.status(404).json({ message: 'No item with this id exists' });
           return;
         }
-        res.json(dbPostData); // Returning the result data as JSON Object
+        res.json(dbItemData); // Returning the result data as JSON Object
       })
       .catch(err => {
         // if there is an error, it will log an error
