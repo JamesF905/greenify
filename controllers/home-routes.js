@@ -128,4 +128,5 @@ router.get('/category/:id', (req, res) => {
         });
 });
 
+// Exports the module to be used in other files
 module.exports = router;
