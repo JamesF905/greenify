@@ -44,3 +44,4 @@ Item.hasMany(History, {
 
 // Exports the module to be used in other files
 module.exports = { User, Item, Category, History };
+// Commenting to make github recognize this branch, ignore this line

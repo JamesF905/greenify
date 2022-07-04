@@ -73,3 +73,4 @@ User.init(
 
 // Exports the module to be used in other files
 module.exports = User;
+// Commenting to make github recognize this branch, ignore this line
