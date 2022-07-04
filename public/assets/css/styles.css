@@ -1,3 +1,11 @@
+:root{
+    --light: #fbfffe;
+    --grey: #363837;
+    --grey_opac: #36383750;
+    --orange: #e64731;
+    --green: #71a54a;
+}
+
 body, html{
     display: flex;
     flex-direction: column;
@@ -6,6 +14,10 @@ body, html{
     height: auto;
     margin: 0;
     padding: 0;
+}    
+
+h1,h2,h3,h4,h5,h6{
+    color: var(--grey);
 }
 
 h1{font-size: 70px;}
@@ -16,33 +28,41 @@ h5{font-size: 10px;}
 h6{font-size: 5px;}
 
 header{
-    background-color: brown;
+    background-color: var(--grey);
     flex:0 0 500px;  
 }   
 
-    section{
+    article, section{
         max-width: 1440px;
         display: flex;
         margin: 0 auto;
     }
 
-    header section{
-        /*background-color: aqua;*/
+    header article{
         position: relative;
         flex-direction:column;
         justify-content: center;
         align-items: center;
         height: 100%;
-        color: beige;
     }
 
-    header section *{
-        z-index: 2;    
+    header article *{
+        z-index: 2;
+        color: var(--light);   
     }
 
     #logo{
         width: 200px;
         height: 200px;
+        opacity: 0.9;
+        /*background-color:var(--green);*/
+        border-radius: 50%;                
+        transition: all .5s;
+        cursor: pointer;
+    }
+
+    #logo:hover {
+        transform: rotate(360deg);
     }
 
     nav{
@@ -56,6 +76,10 @@ header{
     nav li{
         display: inline-block;
         margin: 10px;
+    }
+
+    nav li a:hover{
+        color: var(--orange);
     }
 
     video {
@@ -72,87 +96,101 @@ header{
       }
 
 main{
-    background-color: darkgreen;
+    background-color: var(--light);
     flex:1;
 }
 
-    main section{
-        background-color:beige;
+    main article{
+        background-color:var(--light);
         flex-direction:row;
         flex-wrap: wrap;
         justify-content:space-between;
-        margin-top: 20px;
     }
 
         figure{
             flex:1;
-            box-shadow: 1px 1px 1px 1px rgb(83, 83, 83);
-            border-radius: 2px;
-            background-size: auto 100%;
-            background-position: center;
-            background-repeat: no-repeat;           
-            margin-left: 20px;
+            border: solid 2px var(--grey_opac);
+            border-radius: 10px;         
+            margin: 20px 0 20px 20px;
             text-align: center;
-            padding: 40px 20px;   
+            padding: 40px 20px;  
         }
 
-            img{
+            figure img{
                 width: 150px;
                 height: 150px;
-                opacity: 0.8;
-                background-color: orangered;
                 border-radius: 50%;                
-                transition: all .5s;
-                box-shadow: 1px 1px 1px 1px rgb(83, 83, 83);                
+                transition: all .5s;               
             }
-
-            img:hover {
-                transform: rotate(360deg);
-            }
+/*
+            figure img:hover {
+                transform:scale(1.5, 1.5);
+            }*/
         
         figure *{
             margin: 20px 0px;
         }
 
         figure:first-of-type{
-            margin-left: 0;
+            margin: 20px 0;
         }
 
-        figure a {
-            background-color: rgba(0,0,0,0.8);
-            color: antiquewhite;
+        .main_links{
+            background-color:var(--orange);
+            color: var(--light);
             padding: 10px;
-            border-radius: 20px;
+            border-radius: 4px;
+            transition: all .3s;
         }
 
-        figure a:hover {
-            background-color: rgba(102, 102, 102, 0.8);
-            color: rgba(0,0,0,0.8);
+        .main_links:hover {
+            background-color: var(--grey);
+            color: var(--light);
+            opacity: 0.8;
         }
 
-        main section:last-of-type img{
-            width: 50px;
-            height: 50px;
+        main article:last-of-type{
+            background-color: var(--green);
+            max-width: 100%;
         }
 
-        main section:last-of-type div:first-of-type img{
-            width: 200px;
-            height: 200px;
-        }
-        
+            section{        
+                justify-content: center;
+                align-content: center;
+            }
+
+            section img{
+                width: 15%;
+            }
+
+            section figure{
+                border: none;
+                padding: 20px; 
+            }
+
+            section *{
+                color: var(--light);
+            }
 
 footer{
-    background-color: dodgerblue;
+    background-color:var(--grey);
     flex:0 0 100px;
  }
 
 @media only screen and (max-width: 749px) {
-    main section{
+    main article{
         flex-direction:column;
     }
 
     figure{
         margin: 20px 0px 0px;
+        border-width: 0px 0px 2px 0px;
+        border-radius: 0px;
+    }
+
+    section img{
+        width: 60px;
+        height: 60px;
     }
 
     nav{
