@@ -1,10 +1,8 @@
 <ul class="item-list">
-<div class="comments">
-  {{#each this}}
-  <section class="comment">
-    <div class="meta">
-      {{item.title}}
-    </div>
-  </section>
+  {{#each category as |item|}}
+  <li>
+    {{> item-info }}
+  </li>
   {{/each}}
-</div>
+</ul>
+<p>This Worked!</p>
