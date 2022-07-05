@@ -37,7 +37,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setting up handlebars as the template engine for the server
-app.engine('handlebars', hbs.engine);
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set('view engine', 'handlebars');
 
 // Making Express parse JSON data and string data
