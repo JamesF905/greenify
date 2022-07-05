@@ -80,7 +80,7 @@ router.get('/category/:id', (req, res) => {
                 return;
             }
             // Serialize the category data, removing extra sequelize meta data. No mapping is needed here because we are only grabbing one category with the findOne method above (plain: true is required for this as it makes it a plain object)
-            const items = dbCategoryData.get({ plain: true });
+            const items = dbCategoryData.item.get({ plain: true });
 
             // Passing the category and a session variable into the single category page template
             res.render('single-category', { items, loggedIn: req.session.loggedIn });
