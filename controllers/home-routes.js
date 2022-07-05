@@ -73,17 +73,17 @@ router.get('/category/:id', (req, res) => {
                 },
             ]
         })
-        .then(dbCategoryData => {
+        .then(dbItemData => {
             // If there is no matching id for the category requested, log an error
-            if (!dbCategoryData) {
+            if (!dbItemData) {
                 res.status(404).json({ message: 'No category with this id exists' });
                 return;
             }
             // Serialize the category data, removing extra sequelize meta data. No mapping is needed here because we are only grabbing one category with the findOne method above (plain: true is required for this as it makes it a plain object)
-            const category = dbCategoryData.get({ plain: true });
+            const items = dbItemData.get({ plain: true });
 
             // Passing the category and a session variable into the single category page template
-            res.render('single-category', { category, loggedIn: req.session.loggedIn });
+            res.render('single-category', { items, loggedIn: req.session.loggedIn });
         })
         .catch(err => {
             // if there is an error, it will log an error
