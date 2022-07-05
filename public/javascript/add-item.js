@@ -28,7 +28,7 @@ async function newFormHandler(event) {
     // if the response is okay, reload the page, showing the newest post now in the user's post list
     if (response.ok) {
         console.log("post worked")
-      //document.location.replace('/');
+      document.location.replace('/');
       // otherwise, display the error
     } else {
       alert(response.statusText);

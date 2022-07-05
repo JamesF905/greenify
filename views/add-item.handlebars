@@ -5,12 +5,20 @@
   </h2>
   <form class="new-post-form">
     <div>
+        <p1>Item Title</p1>
       <input name="post-title" type="text" value="" />
     </div>
     <div>
+        <p1>Describe The Item</p1>
       <textarea name="post-text" value=""></textarea>
     </div>
         <div>
+            <p1>What Category Does This Belong To? Write The Number Below</p1>
+            <ul>
+                <li>1- Indoor Plants</li>
+                <li>2- Outdoor Plants</li>
+                <li>3- Products</li>
+            </ul>  
       <input name="category-id" type="text" value="" />
     </div>
 
@@ -20,7 +28,7 @@
       <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
     </div>-->
     <button type="submit">Save item</button>
-    <button type="button" class="delete-post-btn">Delete post</button>
+     <!--<button type="button" class="delete-post-btn">Delete post</button>-->
   </form>
 </article>
 
