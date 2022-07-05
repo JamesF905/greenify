@@ -9,7 +9,9 @@
 body, html{
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: center;
+    min-height: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
 }    
