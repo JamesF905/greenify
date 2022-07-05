@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS greenify_db;
+CREATE DATABASE greenify_db;
