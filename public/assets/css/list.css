@@ -1,0 +1,72 @@
+header{
+    flex:0;
+    max-height: 80px;
+}
+
+header article{
+    flex-direction:row;
+    justify-content: flex-start;
+    align-items:baseline;
+    padding: 10px 0;  
+}
+
+header h1, header a, header h4{
+    margin: 5px;
+}
+
+#logo{
+    width: 60px;
+    height: 60px;
+}
+
+header h1{font-size: 60px}
+header h4{font-size: 15px}
+
+nav{
+    position:initial;
+    margin-left: auto;
+    align-self: center;
+}
+
+header a{
+    align-self: center; 
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+}
+
+#list_header{
+    background-color: var(--green);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#list_banner, #info{
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+#info{
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    margin: 20px;
+}
+
+#info *{
+    margin: 20px;
+    display: block;
+}
+
+#info p{
+    font-size: 20px;
+}
+
