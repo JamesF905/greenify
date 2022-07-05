@@ -1,32 +1,33 @@
 // Setting up model requirment for User
 const { User } = require('../models');
-
+const bcrypt = require('bcrypt');
+let encryptedPassword = bcrypt.hashSync("test12345", 10);
 // Defining the properties of userData
 const userData = [
     {
         username: "Ben",
         email: "ben@email.com",
-        password: "test12345"
+        password: encryptedPassword
     },
     {
         username: "James",
         email: "james@email.com",
-        password: "test12345"
+        password: encryptedPassword
     },
     {
         username: "Andrew",
         email: "andrew@email.com",
-        password: "test12345"
+        password: encryptedPassword
     },
     {
         username: "Keegan",
         email: "keegan@email.com",
-        password: "test12345"
+        password: encryptedPassword
     },
     {
         username: "Bob",
         email: "bob@email.com",
-        password: "test12345"
+        password: encryptedPassword
     },
 ];
 

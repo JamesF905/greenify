@@ -1,8 +1,8 @@
 <ul class="item-list">
-  {{#each items as |item|}}
+    <h1>{{items.category_name}}</h1>
+  {{#each category.items as |item|}}
   <li>
     {{> item-info }}
   </li>
   {{/each}}
 </ul>
-<p>This Worked!</p>

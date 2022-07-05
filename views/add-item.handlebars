@@ -1,15 +1,19 @@
 <article>
   <a href="/"> &larr; Back to home</a>
   <h2>
-    Edit Item
+    Add Item
   </h2>
-  <form class="edit-post-form">
+  <form class="new-post-form">
     <div>
-      <input name="post-title" type="text" value="{{item.title}}" />
+      <input name="post-title" type="text" value="" />
     </div>
     <div>
-      <textarea name="post-text">{{item.item_text}}</textarea>
+      <textarea name="post-text" value=""></textarea>
     </div>
+        <div>
+      <input name="category-id" type="text" value="" />
+    </div>
+
     <!--<div>
       Posted by you on {{format_date post.created_at}}
       |
@@ -21,5 +25,5 @@
 </article>
 
 <!--Scripts-->
-<script src="/javascript/edit-item.js"></script>
+<script src="/javascript/add-item.js"></script>
 <!--<script src="/javascript/delete-item.js"></script>

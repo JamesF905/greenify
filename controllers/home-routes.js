@@ -53,6 +53,7 @@ router.get('/signup', (req, res) => {
 
 // When a user clicks on a category on the home page, it will view that category with the list of items belonging to it.
 router.get('/category/:id', (req, res) => {
+    console.log("THIS IS THE CODE!")
     Category.findOne({
             // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
             where: 
@@ -74,22 +75,129 @@ router.get('/category/:id', (req, res) => {
             ]
         })
         .then(dbCategoryData => {
+            console.log(dbCategoryData)
             // If there is no matching id for the category requested, log an error
             if (!dbCategoryData) {
                 res.status(404).json({ message: 'No category with this id exists' });
                 return;
             }
             // Serialize the category data, removing extra sequelize meta data. No mapping is needed here because we are only grabbing one category with the findOne method above (plain: true is required for this as it makes it a plain object)
-            const items = dbCategoryData.get({ plain: true });
+            const category = dbCategoryData.get({ plain: true });
+            console.log(category)
 
             // Passing the category and a session variable into the single category page template
-            res.render('single-category', { items, loggedIn: req.session.loggedIn });
+            res.render('single-category', { category, loggedIn: req.session.loggedIn });
         })
         .catch(err => {
             // if there is an error, it will log an error
             console.log(err);
             res.status(500).json(err);
         });
+});
+
+router.get('/item/:id', (req, res) => {
+    Item.findOne({
+            // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
+            where: 
+            {
+                id: req.params.id
+            },
+            // From the Category table, it will find all attributes including the ID, and category_name
+            attributes: 
+            [
+                'id',
+                'title',
+                'item_text',
+                'category_id',
+                'created_at'
+            ],
+            // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                },
+                {
+                    model: History,
+                    attributes: ['id', 'history_name', 'item_id'],
+    
+                }
+            ]
+        })
+        .then(dbItemData => {
+            console.log(dbItemData)
+            // If there is no matching id for the category requested, log an error
+            if (!dbItemData) {
+                res.status(404).json({ message: 'No item with this id exists' });
+                return;
+            }
+            // Serialize the category data, removing extra sequelize meta data. No mapping is needed here because we are only grabbing one category with the findOne method above (plain: true is required for this as it makes it a plain object)
+            const item = dbItemData.get({ plain: true });
+            console.log(item)
+
+            // Passing the category and a session variable into the single category page template
+            res.render('single-item', { item, loggedIn: req.session.loggedIn });
+        })
+        .catch(err => {
+            // if there is an error, it will log an error
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+router.get('/item/edit/:id', (req, res) => {
+    Item.findOne({
+            // Checks for the request's id property, this will make it check for if the id parameter of both the request and the result match
+            where: 
+            {
+                id: req.params.id
+            },
+            // From the Category table, it will find all attributes including the ID, and category_name
+            attributes: 
+            [
+                'id',
+                'title',
+                'item_text',
+                'category_id',
+                'created_at'
+            ],
+            // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                },
+                {
+                    model: History,
+                    attributes: ['id', 'history_name', 'item_id'],
+    
+                }
+            ]
+        })
+        .then(dbItemData => {
+            console.log(dbItemData)
+            // If there is no matching id for the category requested, log an error
+            if (!dbItemData) {
+                res.status(404).json({ message: 'No item with this id exists' });
+                return;
+            }
+            // Serialize the category data, removing extra sequelize meta data. No mapping is needed here because we are only grabbing one category with the findOne method above (plain: true is required for this as it makes it a plain object)
+            const item = dbItemData.get({ plain: true });
+            console.log(item)
+
+            // Passing the category and a session variable into the single category page template
+            res.render('edit-post', { item, loggedIn: req.session.loggedIn });
+        })
+        .catch(err => {
+            // if there is an error, it will log an error
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+// when a user clicks /new to add a post, render that page
+router.get('/new', (req, res) => {
+    res.render('add-item');
 });
 
 // Exports the module to be used in other files
