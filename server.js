@@ -18,7 +18,7 @@ const hbs = exphbs.create({ helpers });
 
 // Initializing the session
 const sess = {
-    secret: process.env.DB_SESSION_SECRET,
+    secret: 'test',
     cookie: { maxAge: 7200000 },
     resave: false,
     saveUninitialized: true,
