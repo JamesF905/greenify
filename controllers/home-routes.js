@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
         const categories = dbCategoryData.map(category => category.get({ plain: true }));
 
         // Passing the categories into the homepage template
-        res.render('homepage', { categories, loggedIn: req.session.loggedIn });
+        res.render('homepage', { categories });
     })
     .catch(err => {
         // if there is an error, it will log an error
