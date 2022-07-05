@@ -25,12 +25,8 @@ router.get('/', (req, res) => {
             },
             {
                 model: History,
-                attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
-                include: 
-                {
-                    model: User,
-                    attributes: ['username']
-                }
+                attributes: ['id', 'history_name', 'item_id'],
+
             }
         ]
     })
@@ -66,12 +62,8 @@ router.get('/:id', (req, res) => {
         },
         {
             model: History,
-            attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
-            include: 
-            {
-                model: User,
-                attributes: ['username']
-            }
+            attributes: ['id', 'history_name', 'item_id'],
+
         }
       ]
     })

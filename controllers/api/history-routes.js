@@ -15,10 +15,9 @@ router.get('/', (req, res) => {
             'history_name',
             'item_id',
             'user_id',
-            'created_at',
         ],
         // Order the posts from most recent in descending order
-        order: [[ 'created_at', 'DESC']],
+        order: [[ 'id', 'DESC']],
         // From the User table, include the username from the User associated with the history. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties)
         include: [
             {
@@ -59,7 +58,6 @@ router.get('/:id', (req, res) => {
         'history_name',
         'item_id',
         'user_id',
-        'created_at',
       ],
       // From the User table, include the username from the User associated with the history edit. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties)
       include: [

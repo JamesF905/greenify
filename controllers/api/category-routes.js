@@ -18,26 +18,9 @@ router.get('/', (req, res) => {
         // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
         include: [
             {
-                model: User,
-                attributes: ['username']
-            },
-            {
                 model: Item,
                 attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
-                include: 
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: History,
-                attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
-                include: 
-                {
-                    model: User,
-                    attributes: ['username']
-                }
+
             }
         ]
     })
@@ -66,26 +49,8 @@ router.get('/:id', (req, res) => {
         // From the User table, include the username from the User associated with the item. Then, from the Item table, include all data from that table (which requires the id, title, item_text, category_id, and timestamp properties). And finally, from the History table, include all history edits (which requires their id, history_name, item_id, user_id, and timestamp properties)
         include: [
             {
-                model: User,
-                attributes: ['username']
-            },
-            {
                 model: Item,
                 attributes: ['id', 'title', 'item_text', 'category_id', 'created_at'],
-                include: 
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
-            {
-                model: History,
-                attributes: ['id', 'history_name', 'item_id', 'user_id', 'created_at'],
-                include: 
-                {
-                    model: User,
-                    attributes: ['username']
-                }
             }
         ]
     })

@@ -35,9 +35,30 @@ User.hasMany(Item, {
     hooks:true
 });
 
-// Item table will have one or multiple History tables based on their item_id, and setting it up so that if a item is deleted, all of the edit history that belong to it are also deleted as well, and making it invoke hooks from User.js
+Category.hasMany(Item, {
+    foreignKey: 'category_id',
+    onDelete: 'cascade',
+    hooks:true
+});
+
+History.belongsTo(Item, {
+    foreignKey: 'item_id',
+    onDelete: 'cascade',
+    hooks: true
+});
+
 Item.hasMany(History, {
     foreignKey: 'item_id',
+    onDelete: 'cascade',
+    hooks:true
+});
+
+History.belongsTo(User, {
+    foreignKey: 'user_id'
+});
+
+History.hasMany(User, {
+    foreignKey: 'user_id',
     onDelete: 'cascade',
     hooks:true
 });
