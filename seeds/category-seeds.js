@@ -10,6 +10,9 @@ const categoryData = [
         category_name: "Outdoor Plants",
     },
     {
+        category_name: "Beginner Plants",
+    },
+    {
         category_name: "Products",
     },
 ]
