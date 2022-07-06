@@ -1,23 +1,34 @@
-async function loginFormHandler(event) {
+//async function loginFormHandler(event) {
+    loginFormHandler = async function(event){
+
+
     event.preventDefault();
 
     const email = document.querySelector('#email-login').value.trim();
     const password = document.querySelector('#password-login').value.trim();
 
     if (email && password) {
-        const response = await fetch('/api/users/login', {
-            method: 'post',
-            body: JSON.stringify({
-                email,
-                password
-            }),
-            headers: {'Content-Type': 'application/json'}
-        });
-        if (response.ok) {
-            document.location.replace('/dashboard');
-        } else {
-            let result = await response.json()
-            alert(result.message)
+        try{
+
+
+            const response = await fetch('/api/user/login', {
+                method: 'post',
+                body: JSON.stringify({
+                    email,
+                    password
+                }),
+                headers: {'Content-Type': 'application/json'}
+            });
+            console.log(response)
+            if (response.ok) {
+                console.log("LOGIN WORKED I THINK")
+                document.location.replace('/');
+            } else {
+                let result = await response.json()
+                alert(result.message)
+            }
+        } catch(e) {
+            console.log(e)
         }
     }
 }
