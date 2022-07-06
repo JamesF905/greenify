@@ -84,11 +84,13 @@ router.get('/:id', (req, res) => {
 
 // Creates a new item
 router.post('/', withAuth, (req, res) => {
+  console.log("MADE IT INSIDE POST")
     // Creates a new item in the Item table with the properties of title, item_text, and user_id
     Item.create({
         title: req.body.title,
-        post_text: req.body.item_text,
-        user_id: req.session.user_id
+        item_text: req.body.item_text,
+        user_id: req.session.user_id,
+        category_id: req.body.category_id
     })
     .then(dbItemData => res.json(dbItemData)) // Returning the result data as JSON Object
     .catch(err => {

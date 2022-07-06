@@ -1,0 +1,11 @@
+
+    <h1>{{items.category_name}}</h1>
+
+  {{#each category.items as |item|}}
+ 
+    {{> item-info }}
+ 
+  {{/each}}
+
+
+<a class="main_links" href="/new">Add Item</a>
