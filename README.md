@@ -17,13 +17,13 @@
   <h3 align="center">Greenify</h3>
 
   <p align="center">
-    <a href="https://jamesf905.github.io/greenify"><strong>https://jamesf905.github.io/greenify</strong></a>
+    <a href="https://greenifywiki.herokuapp.com"><strong>https://greenifywiki.herokuapp.com</strong></a>
   </p>
 </div>
 
 ## About The Project
 
-[![Greenify][product-screenshot]](https://jamesf905.github.io/greenify)
+[![Greenify][product-screenshot]](https://greenifywiki.herokuapp.com)
 
 GIVEN I am interested in indoor gardening
 
