@@ -1,9 +1,11 @@
-<ul class="item-list">
+
     <h1>{{items.category_name}}</h1>
+
   {{#each category.items as |item|}}
-  <li>
+ 
     {{> item-info }}
-  </li>
+ 
   {{/each}}
-</ul>
-<a href="/new">Add Item</a>
+
+
+<a class="main_links" href="/new">Add Item</a>
