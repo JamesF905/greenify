@@ -1,5 +1,14 @@
+
 <figure>
-    <img src={{link}} />
+    {{#if category_name === "Indoor Plants" }}                
+        {{<img src="images/freddie-marriage-UcfKYTan-LU-unsplash.jpg" }}
+    {{/if}}
+    {{#if category_name === "Outdoor Plants" }}                
+        {{<img src="images/kai-pilger-H6f1yS2uJQw-unsplash.jpg" }}
+    {{/if}}
+    {{#if category_name === "Beginner Plants" }}                
+        {{<img src="images/daniel-oberg-sEApBUS4fIk-unsplash.jpg" }}
+    {{/if}}
     <h2>{{category_name}}</h2>
     <p>Plants that are typically grown indoors under varied or unatural lighting conditions</p>
     <a class="main_links" href="/api/category/"{{id}}>View Plants</a>

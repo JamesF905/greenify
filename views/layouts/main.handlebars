@@ -33,12 +33,6 @@
                         <a href="/login">Create Account</a> 
                       </li>
                     {{/if}}
-                    <li>
-                        <a href="#">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">Create Account</a> 
-                    </li>
                 </ul>
             </nav>
         </article>
@@ -48,10 +42,11 @@
         <article>
             {{#each categories as |category|}}                              
                 <figure>
+                  {{category_name}}
                   
-                  <h2>{{category}}</h2>
+                  <h2>{{category_name}}</h2>
                   <p>Plants that are typically grown indoors under varied or unatural lighting conditions</p>
-                  <a class="main_links" href="/api/category/">View Plants</a>
+                  <a class="main_links" href="/api/category/"{{id}}>View Plants</a>
                 </figure>             
             {{/each}}
         </article>
